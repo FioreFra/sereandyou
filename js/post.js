@@ -28,7 +28,7 @@
     const grid = document.getElementById('looks-grid');
     const countEl = document.getElementById('looks-count');
 
-    countEl.textContent = ids.length ? `${ids.length} look in questo post` : '';
+    countEl.textContent = ids.length ? `${ids.length} outfit in questo look` : '';
 
     if (!ids.length) {
       grid.innerHTML = '<p style="grid-column:1/-1;padding:32px;font:400 14px \'DM Sans\',sans-serif;color:rgba(0,0,0,.6);">Nessun look pubblicato per questo post al momento.</p>';
@@ -45,7 +45,7 @@
           <div class="look-card__body">
             <span class="tag">${escapeHtml(look.occasione)}</span>
             <h3 class="look-card__title">${escapeHtml(look.nome)}</h3>
-            <span class="link-underline look-card__link">Guarda il look →</span>
+            <span class="link-underline look-card__link">Guarda come ricrearlo su Asos →</span>
           </div>
         </a>`;
     }).join('');

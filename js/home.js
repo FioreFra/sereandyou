@@ -35,7 +35,7 @@
           </div>
           <div class="look-card__body">
             <h3 class="look-card__title">${escapeHtml(post.nome)}</h3>
-            <span class="link-underline look-card__link">Guarda il post →</span>
+            <span class="link-underline look-card__link">Guarda gli outfit →</span>
           </div>
         </a>`;
     }).join('');

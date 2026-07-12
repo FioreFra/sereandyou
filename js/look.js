@@ -75,7 +75,7 @@
       crumbPost.textContent = post.nome;
       crumbPost.href = `post.html?id=${encodeURIComponent(look.post_id)}`;
     } else {
-      crumbPost.textContent = 'I miei post';
+      crumbPost.textContent = 'I miei look';
       crumbPost.href = 'index.html#posts-grid';
     }
     document.getElementById('look-tag').textContent = look.occasione;
