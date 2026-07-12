@@ -67,9 +67,17 @@
       '<p style="grid-column:1/-1;padding:24px 0;font:400 15px \'DM Sans\',sans-serif;color:rgba(0,0,0,.6);">Nessun look disponibile al momento. <a href="index.html">Torna alla home</a>.</p>';
   }
 
-  function renderLook(look, products) {
+  function renderLook(look, products, post) {
     document.title = `${look.nome} — Sere&You`;
     document.getElementById('crumb-current').textContent = look.nome;
+    const crumbPost = document.getElementById('crumb-post');
+    if (post) {
+      crumbPost.textContent = post.nome;
+      crumbPost.href = `post.html?id=${encodeURIComponent(look.post_id)}`;
+    } else {
+      crumbPost.textContent = 'I miei post';
+      crumbPost.href = 'index.html#posts-grid';
+    }
     document.getElementById('look-tag').textContent = look.occasione;
     document.getElementById('look-title').textContent = look.nome;
     document.getElementById('look-caption').textContent = look.caption;
@@ -108,7 +116,7 @@
   }
 
   window.addEventListener('DOMContentLoaded', () => {
-    window.SereYouData.loadData().then(({ looks, products }) => {
+    window.SereYouData.loadData().then(({ looks, products, posts }) => {
       const ids = Object.keys(looks);
       if (!ids.length) {
         renderNotFound();
@@ -116,7 +124,7 @@
       }
       const requestedId = new URLSearchParams(location.search).get('id');
       const look = (requestedId && looks[requestedId]) ? looks[requestedId] : looks[ids[0]];
-      renderLook(look, products);
+      renderLook(look, products, posts[look.post_id]);
     });
   });
 })();
