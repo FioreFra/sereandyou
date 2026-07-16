@@ -105,6 +105,10 @@
     }).join('');
 
     wireGalleries(itemList);
+
+    if (typeof window.reloadViglink === 'function') {
+      window.reloadViglink();
+    }
   }
 
   window.addEventListener('DOMContentLoaded', () => {
