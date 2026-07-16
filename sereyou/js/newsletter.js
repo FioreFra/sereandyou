@@ -7,7 +7,7 @@
      Finché resta col valore placeholder, il modulo iscrizione
      funziona solo a livello visivo, senza salvare nulla.
      ═══════════════════════════════════════════════════════════ */
-  var WEB_APP_URL = 'INCOLLA_QUI_URL_WEB_APP_APPS_SCRIPT';
+  var WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxQC0mMfe-nX67BinxaRM07Ak_tmz_tghH3bOBfMAh8nM8QxwSQSXohOiXJtCjC2MfgHg/exec';
 
   function isConfigured() {
     return /^https:\/\/script\.google\.com\//.test(WEB_APP_URL);
