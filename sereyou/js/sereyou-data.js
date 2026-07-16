@@ -92,7 +92,7 @@
           nome: (r.nome || '').trim(),
           prezzo: toPrice(r.prezzo),
           immagini: imageList(r.immagine_url),
-          link: (r.link_affiliato || '#').trim(),
+          link: (r.link_prodotto || '#').trim(),
           badge: (r.badge || '').trim(),
         };
       });
