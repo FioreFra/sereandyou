@@ -58,8 +58,14 @@
       <p>Un'email quando esce un nuovo carosello. Niente spam, promesso.</p>
     </div>
     <form>
-      <input type="email" name="email" placeholder="la-tua-email@esempio.com" required>
-      <button type="submit">Iscriviti</button>
+      <div class="news__row">
+        <input type="email" name="email" placeholder="la-tua-email@esempio.com" required>
+        <button type="submit">Iscriviti</button>
+      </div>
+      <label class="news__consent">
+        <input type="checkbox" name="consenso" required>
+        <span>Accetto di essere ricontattata via email per la newsletter e ho letto la <a href="privacy.html">Privacy Policy</a>.</span>
+      </label>
     </form>
   </div>
 
