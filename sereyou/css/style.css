@@ -605,11 +605,6 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   white-space: nowrap;
 }
 
-.item-list--pending .item-link {
-  pointer-events: none;
-  opacity: .45;
-  cursor: default;
-}
 
 .affiliate-note {
   margin: 0;
