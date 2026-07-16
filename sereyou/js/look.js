@@ -106,20 +106,8 @@
 
     wireGalleries(itemList);
 
-    /* I link prodotto restano disattivati finché VigLink non ha finito di
-       riscriverli in link affiliati: su rete lenta (mobile) un tap troppo
-       anticipato aprirebbe il link "grezzo", senza tracciamento. */
-    itemList.classList.add('item-list--pending');
-    var markReady = function () { itemList.classList.remove('item-list--pending'); };
-    var safety = setTimeout(markReady, 3000);
     if (typeof window.reloadViglink === 'function') {
-      window.reloadViglink(function () {
-        clearTimeout(safety);
-        markReady();
-      });
-    } else {
-      clearTimeout(safety);
-      markReady();
+      window.reloadViglink();
     }
   }
 
