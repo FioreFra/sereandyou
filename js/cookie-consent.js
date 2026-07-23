@@ -38,15 +38,12 @@
     insertViglinkScript();
   }
 
-  // Alcune pagine (es. look.html) iniettano nuovi link ai prodotti dopo il
-  // caricamento iniziale: richiamano questa funzione per far rianalizzare
-  // la pagina a VigLink. Se il consenso "affiliazione" non è stato dato,
-  // non fa nulla.
+  // VigLink genera i link di affiliazione ai prodotti: è sempre attivo,
+  // non richiede consenso. Alcune pagine (es. look.html) iniettano nuovi
+  // link dopo il caricamento iniziale e richiamano questa funzione per
+  // far rianalizzare la pagina a VigLink.
   window.reloadViglink = function () {
-    var consent = getConsent();
-    if (consent && consent.marketing) {
-      insertViglinkScript();
-    }
+    insertViglinkScript();
   };
 
   function loadClarity() {
@@ -60,7 +57,6 @@
   }
 
   function applyConsent(consent) {
-    if (consent.marketing) loadViglink();
     if (consent.analytics) loadClarity();
   }
 
@@ -78,19 +74,15 @@
 
     el.innerHTML =
       '<div class="cc-banner__content">' +
-        '<p class="cc-banner__text">Usiamo cookie tecnici necessari al funzionamento del sito. Solo con il tuo consenso usiamo anche cookie di statistica (Microsoft Clarity) per capire come viene usato il sito e cookie di affiliazione (VigLink) per i link ai prodotti. Puoi accettare, rifiutare o scegliere le tue preferenze. <a href="cookie-policy.html">Scopri di più</a>.</p>' +
+        '<p class="cc-banner__text">Usiamo cookie tecnici e di affiliazione (VigLink) necessari al funzionamento del sito. Solo con il tuo consenso usiamo anche cookie di statistica (Microsoft Clarity) per capire come viene usato il sito. Puoi accettare, rifiutare o scegliere le tue preferenze. <a href="cookie-policy.html">Scopri di più</a>.</p>' +
         '<div class="cc-banner__prefs" id="cc-prefs" hidden>' +
           '<label class="cc-toggle">' +
             '<input type="checkbox" checked disabled>' +
-            '<span>Tecnici (sempre attivi)</span>' +
+            '<span>Tecnici e di affiliazione (sempre attivi)</span>' +
           '</label>' +
           '<label class="cc-toggle">' +
             '<input type="checkbox" id="cc-analytics">' +
             '<span>Statistiche (Microsoft Clarity)</span>' +
-          '</label>' +
-          '<label class="cc-toggle">' +
-            '<input type="checkbox" id="cc-marketing">' +
-            '<span>Affiliazione (VigLink)</span>' +
           '</label>' +
         '</div>' +
         '<div class="cc-banner__actions">' +
@@ -106,7 +98,6 @@
 
     var prefs = el.querySelector('#cc-prefs');
     var analyticsInput = el.querySelector('#cc-analytics');
-    var marketingInput = el.querySelector('#cc-marketing');
     var customizeBtn = el.querySelector('#cc-customize');
     var saveBtn = el.querySelector('#cc-save');
     var acceptBtn = el.querySelector('#cc-accept');
@@ -114,7 +105,6 @@
 
     if (existingConsent) {
       analyticsInput.checked = !!existingConsent.analytics;
-      marketingInput.checked = !!existingConsent.marketing;
     }
 
     function close() {
@@ -130,20 +120,19 @@
     });
 
     acceptBtn.addEventListener('click', function () {
-      saveConsent({ necessary: true, analytics: true, marketing: true });
+      saveConsent({ necessary: true, analytics: true });
       close();
     });
 
     rejectBtn.addEventListener('click', function () {
-      saveConsent({ necessary: true, analytics: false, marketing: false });
+      saveConsent({ necessary: true, analytics: false });
       close();
     });
 
     saveBtn.addEventListener('click', function () {
       saveConsent({
         necessary: true,
-        analytics: analyticsInput.checked,
-        marketing: marketingInput.checked
+        analytics: analyticsInput.checked
       });
       close();
     });
@@ -176,6 +165,7 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     wireFooterLinks();
+    loadViglink();
     var consent = getConsent();
     if (consent) {
       applyConsent(consent);
