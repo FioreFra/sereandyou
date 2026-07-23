@@ -2,7 +2,6 @@
   'use strict';
 
   var STORAGE_KEY = 'sereandyou_cookie_consent';
-  var VIGLINK_KEY = '623e2468728aa8cd9051ec3242a03b9e';
   var CLARITY_ID = 'xqu7gqtct7';
 
   function getConsent() {
@@ -22,28 +21,18 @@
     applyConsent(consent);
   }
 
-  function insertViglinkScript() {
-    window.vglnk = window.vglnk || { key: VIGLINK_KEY };
-    var s = document.createElement('script');
+  // VigLink è caricato direttamente in ogni pagina con uno script inline
+  // (sempre attivo, non richiede consenso). Alcune pagine (es. look.html)
+  // iniettano nuovi link ai prodotti dopo il caricamento iniziale e
+  // richiamano questa funzione per far rianalizzare la pagina a VigLink.
+  window.reloadViglink = function () {
+    var d = document, t = 'script';
+    var s = d.createElement(t);
     s.type = 'text/javascript';
     s.async = true;
     s.src = '//cdn.viglink.com/api/vglnk.js';
-    var r = document.getElementsByTagName('script')[0];
+    var r = d.getElementsByTagName(t)[0];
     r.parentNode.insertBefore(s, r);
-  }
-
-  function loadViglink() {
-    if (window.__vglnkLoaded) return;
-    window.__vglnkLoaded = true;
-    insertViglinkScript();
-  }
-
-  // VigLink genera i link di affiliazione ai prodotti: è sempre attivo,
-  // non richiede consenso. Alcune pagine (es. look.html) iniettano nuovi
-  // link dopo il caricamento iniziale e richiamano questa funzione per
-  // far rianalizzare la pagina a VigLink.
-  window.reloadViglink = function () {
-    insertViglinkScript();
   };
 
   function loadClarity() {
@@ -165,7 +154,6 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     wireFooterLinks();
-    loadViglink();
     var consent = getConsent();
     if (consent) {
       applyConsent(consent);
