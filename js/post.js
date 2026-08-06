@@ -58,7 +58,7 @@
         renderNotFound();
         return;
       }
-      const requestedId = new URLSearchParams(location.search).get('id');
+      const requestedId = window.SEREYOU_POST_ID || new URLSearchParams(location.search).get('id');
       const postId = (requestedId && posts[requestedId]) ? requestedId : ids[0];
       renderPost(postId, posts[postId], looks);
       if (location.search && window.history && window.history.replaceState) {
