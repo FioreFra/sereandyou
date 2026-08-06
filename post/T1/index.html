@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Look — Sere&amp;You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Cormorant+Garamond:ital,wght@1,500;1,600;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<script>window.SEREYOU_POST_ID = "T1";</script>
+</head>
+<body>
+
+<div class="page">
+  <div class="banner">Nuovi look ogni settimana su TikTok — link in ogni carosello</div>
+
+  <div class="hdr">
+    <img class="hdr__logo" src="/assets/sereyou-logo.png" alt="Sere&amp;You" style="height:94px;width:94px;">
+
+    <a href="/index.html#posts-grid" class="btn-outline">Scopri i look</a>
+  </div>
+
+  <div class="crumb">
+    <a href="/index.html">Home</a>
+    <span class="crumb__sep">/</span>
+    <a href="/index.html#posts-grid">I miei look</a>
+    <span class="crumb__sep">/</span>
+    <span class="crumb__current" id="crumb-current">Post</span>
+  </div>
+
+  <div class="looks-wrap">
+    <div class="looks-head">
+      <h2 id="post-title">Post</h2>
+      <span id="looks-count">Caricamento…</span>
+    </div>
+    <p id="post-caption" class="look-caption" style="margin-bottom:24px;"></p>
+    <div class="looks-grid" id="looks-grid"></div>
+  </div>
+
+  <div class="news">
+    <div>
+      <h3>Non perderti i prossimi look</h3>
+      <p>Un'email quando esce un nuovo carosello. Niente spam, promesso.</p>
+    </div>
+    <form>
+      <div class="news__row">
+        <input type="email" name="email" placeholder="la-tua-email@esempio.com" required>
+        <button type="submit">Iscriviti</button>
+      </div>
+      <label class="news__consent">
+        <input type="checkbox" name="consenso" required>
+        <span>Accetto di essere ricontattata via email per la newsletter e ho letto la <a href="/privacy.html">Privacy Policy</a>.</span>
+      </label>
+    </form>
+  </div>
+
+  <div class="ftr">
+    <img src="/assets/sereyou-logo.png" alt="Sere&amp;You" style="height:28px;width:auto;">
+    <span class="ftr__copy">© 2026 Sere&amp;You · i link ai prodotti sono affiliati</span>
+    <div class="ftr__links">
+      <a href="#">Instagram ↗</a>
+      <a href="#">TikTok ↗</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/cookie-policy.html">Cookie Policy</a>
+      <a href="/note-legali.html">Note legali</a>
+      <a href="#" data-cc-open>Preferenze Cookie</a>
+    </div>
+  </div>
+  <div class="ftr-legal">
+    <span>Sere&amp;You di <span class="fill">Francesca Fiorentini</span> · P.IVA <span class="fill">04302931201</span> · <span class="fill">info@sereandyou.it</span></span>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="/js/sereyou-data.js"></script>
+<script src="/js/post.js"></script>
+<script src="/js/newsletter.js"></script>
+<script type="text/javascript">
+  var vglnk = {key: '623e2468728aa8cd9051ec3242a03b9e'};
+  (function(d, t) {var s = d.createElement(t);
+    s.type = 'text/javascript';s.async = true;
+    s.src = '//cdn.viglink.com/api/vglnk.js';
+    var r = d.getElementsByTagName(t)[0];
+    r.parentNode.insertBefore(s, r);
+  }(document, 'script'));
+</script>
+<script src="/js/cookie-consent.js"></script>
+</body>
+</html>
