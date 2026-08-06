@@ -1,0 +1,10 @@
+{
+  "name": "sereandyou-site",
+  "private": true,
+  "scripts": {
+    "generate": "node scripts/generate-pages.js"
+  },
+  "dependencies": {
+    "papaparse": "^5.4.1"
+  }
+}

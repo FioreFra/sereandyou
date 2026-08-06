@@ -118,7 +118,7 @@
         renderNotFound();
         return;
       }
-      const requestedId = new URLSearchParams(location.search).get('id');
+      const requestedId = window.SEREYOU_LOOK_ID || new URLSearchParams(location.search).get('id');
       const resolvedId = (requestedId && looks[requestedId]) ? requestedId : ids[0];
       const look = looks[resolvedId];
       renderLook(look, products);
