@@ -38,7 +38,7 @@
     grid.innerHTML = ids.map((id) => {
       const look = postLooks[id];
       return `
-        <a href="look.html?id=${encodeURIComponent(id)}" class="look-card">
+        <a href="/look/${encodeURIComponent(id)}/" class="look-card">
           <div class="look-card__media placeholder-img">
             ${mediaHtml(look.immagini, look.nome)}
           </div>
@@ -61,6 +61,9 @@
       const requestedId = new URLSearchParams(location.search).get('id');
       const postId = (requestedId && posts[requestedId]) ? requestedId : ids[0];
       renderPost(postId, posts[postId], looks);
+      if (location.search && window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', `/post/${encodeURIComponent(postId)}/`);
+      }
     });
   });
 })();
