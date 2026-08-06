@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sere&amp;You</title>
+<script>
+  (function () {
+    var match = location.pathname.match(/^\/(look|post)\/([^/]+)\/?$/);
+    var target = '/index.html';
+    if (match) {
+      var page = match[1] === 'look' ? '/look.html' : '/post.html';
+      target = page + '?id=' + encodeURIComponent(match[2]);
+    }
+    location.replace(target + location.hash);
+  })();
+</script>
+</head>
+<body>
+<p>Reindirizzamento in corso… se non succede nulla, <a href="/index.html">torna alla home</a>.</p>
+</body>
+</html>
