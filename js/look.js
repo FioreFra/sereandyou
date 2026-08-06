@@ -73,7 +73,7 @@
     const crumbPost = document.getElementById('crumb-post');
     if (post) {
       crumbPost.textContent = post.nome;
-      crumbPost.href = `/post/${encodeURIComponent(look.post_id)}/`;
+      crumbPost.href = `post.html?id=${encodeURIComponent(look.post_id)}`;
     } else {
       crumbPost.textContent = 'I miei look';
       crumbPost.href = 'index.html#posts-grid';
@@ -126,13 +126,9 @@
         renderNotFound();
         return;
       }
-      const requestedId = window.SEREYOU_LOOK_ID || new URLSearchParams(location.search).get('id');
-      const resolvedId = (requestedId && looks[requestedId]) ? requestedId : ids[0];
-      const look = looks[resolvedId];
+      const requestedId = new URLSearchParams(location.search).get('id');
+      const look = (requestedId && looks[requestedId]) ? looks[requestedId] : looks[ids[0]];
       renderLook(look, products, posts[look.post_id]);
-      if (location.search && window.history && window.history.replaceState) {
-        window.history.replaceState(null, '', `/look/${encodeURIComponent(resolvedId)}/`);
-      }
     });
   });
 })();
