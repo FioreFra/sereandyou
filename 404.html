@@ -6,11 +6,13 @@
 <title>Sere&amp;You</title>
 <script>
   (function () {
-    var match = location.pathname.match(/^\/(look|post)\/([^/]+)\/?$/);
-    var target = '/index.html';
+    var path = location.pathname;
+    var match = path.match(/^(\/sereyou)?\/(look|post)\/([^/]+)\/?$/);
+    var target = (path.indexOf('/sereyou/') === 0 ? '/sereyou/index.html' : '/index.html');
     if (match) {
-      var page = match[1] === 'look' ? '/look.html' : '/post.html';
-      target = page + '?id=' + encodeURIComponent(match[2]);
+      var prefix = match[1] || '';
+      var page = match[2] === 'look' ? '/look.html' : '/post.html';
+      target = prefix + page + '?id=' + encodeURIComponent(match[3]);
     }
     location.replace(target + location.hash);
   })();
