@@ -28,7 +28,7 @@
     grid.innerHTML = ids.map((id) => {
   const look = looks[id];
   return `
-    <a href="look.html?id=${encodeURIComponent(id)}" class="look-card">
+    <a href="/sereyou/look/${encodeURIComponent(id)}/" class="look-card">
       <div class="look-card__media placeholder-img">
         ${mediaHtml(look.immagini, look.nome)}
         <span class="look-card__badge">Carosello TikTok</span>

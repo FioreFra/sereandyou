@@ -119,8 +119,12 @@
         return;
       }
       const requestedId = new URLSearchParams(location.search).get('id');
-      const look = (requestedId && looks[requestedId]) ? looks[requestedId] : looks[ids[0]];
+      const resolvedId = (requestedId && looks[requestedId]) ? requestedId : ids[0];
+      const look = looks[resolvedId];
       renderLook(look, products);
+      if (location.search && window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', `/sereyou/look/${encodeURIComponent(resolvedId)}/`);
+      }
     });
   });
 })();
