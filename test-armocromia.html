@@ -55,32 +55,35 @@
   </div>
 
   <div class="quiz-result" id="quiz-result" hidden>
-    <span class="tag">Il tuo risultato</span>
-    <h2 id="result-season"></h2>
-    <p class="quiz-result__desc" id="result-desc"></p>
 
-    <div class="news quiz-email" id="quiz-email">
+    <!-- Gate: il risultato resta nascosto finché non si lascia l'email -->
+    <div class="news quiz-email" id="quiz-gate">
       <div>
-        <h3>Vuoi la palette esatta della tua stagione?</h3>
-        <p>I colori da cercare, quelli da evitare, e i trucchi per valorizzare capelli, occhi e pelle — te li mando via email, con uno sconto di lancio sulla guida completa.</p>
+        <span class="tag">Test completato</span>
+        <h3>Dove mando il risultato?</h3>
+        <p>Lascia la tua email: ti sveliamo subito la tua stagione cromatica, con la palette esatta da cercare e uno sconto di lancio sulla guida completa.</p>
       </div>
 
       <form id="quiz-email-form">
         <div class="news__row">
           <input type="email" name="email" placeholder="la-tua-email@esempio.com" required>
-          <button type="submit">Voglio la palette</button>
+          <button type="submit">Scopri il risultato</button>
         </div>
         <label class="news__consent">
           <input type="checkbox" name="consenso" required>
           <span>Accetto di essere ricontattata via email e ho letto la <a href="privacy.html">Privacy Policy</a>.</span>
         </label>
       </form>
+    </div>
 
-      <div class="quiz-email__success" id="quiz-email-success" hidden>
-        <p>Fatto. Controlla la posta (anche lo spam): la palette è in arrivo.</p>
-        <!-- Placeholder: sostituire con l'URL reale della pagina prodotto "Armocromia over 40" (Payhip/Gumroad) -->
-        <a href="https://payhip.com/b/SOSTITUISCI-CON-URL-PRODOTTO" id="quiz-product-link" class="btn-primary" target="_blank" rel="noopener">Voglio subito tutta la guida →</a>
-      </div>
+    <!-- Reveal: mostrato solo dopo l'invio dell'email -->
+    <div class="quiz-reveal" id="quiz-reveal" hidden>
+      <span class="tag">Il tuo risultato</span>
+      <h2 id="result-season"></h2>
+      <p class="quiz-result__desc" id="result-desc"></p>
+      <p class="quiz-reveal__note">Controlla anche la posta (pure lo spam): ti abbiamo appena mandato la palette completa.</p>
+      <!-- Placeholder: sostituire con l'URL reale della pagina prodotto "Armocromia over 40" (Payhip/Gumroad) -->
+      <a href="https://payhip.com/b/SOSTITUISCI-CON-URL-PRODOTTO" id="quiz-product-link" class="btn-primary" target="_blank" rel="noopener">Voglio subito tutta la guida →</a>
     </div>
 
     <button type="button" class="quiz-restart" id="quiz-restart">Rifai il test</button>

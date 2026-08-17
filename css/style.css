@@ -772,8 +772,23 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   max-width: 460px;
 }
 
+.quiz-reveal__note {
+  margin: -6px 0 0;
+  font: 400 12.5px/1.5 'DM Sans', sans-serif;
+  color: rgba(0, 0, 0, .5);
+}
+
+.quiz-reveal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+#quiz-gate[hidden], .quiz-reveal[hidden] { display: none; }
+
 .quiz-email {
-  margin-top: 12px;
   width: 100%;
   max-width: 560px;
   flex-direction: column;
@@ -782,19 +797,11 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   text-align: center;
 }
 
-.quiz-email form[hidden] { display: none; }
 .quiz-email p { max-width: 400px; }
 .quiz-email .news__row { max-width: 380px; }
 .quiz-email .news__row input { flex: 1; width: auto; }
 .quiz-email .news__row button { white-space: nowrap; }
 .quiz-email .news__consent { max-width: 380px; text-align: left; }
-
-.quiz-email__success p {
-  margin: 0 0 16px;
-  color: #fff;
-  font: 700 14px/1.5 'DM Sans', sans-serif;
-  max-width: 380px;
-}
 
 .quiz-restart {
   margin-top: 4px;

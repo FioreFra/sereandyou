@@ -2,21 +2,37 @@
   'use strict';
 
   /* ═══════════════════════════════════════════════════════════
-     CONFIGURAZIONE INVIO EMAIL
-     Riusa la stessa Web App Google Apps Script già collegata al
-     modulo newsletter del sito (vedi js/newsletter.js), così i
-     contatti finiscono nello stesso Google Sheet. Il campo
-     "fonte" distingue i lead del quiz da quelli della newsletter
-     generica — perché lo Sheet lo salvi, aggiungi una colonna
-     "fonte" (e "stagione") allo script Apps Script lato server:
-     oggi lo script probabilmente legge solo e.parameter.email,
-     quindi i due campi extra vengono inviati ma ignorati finché
-     non lo si aggiorna.
+     CONFIGURAZIONE INVIO EMAIL — Brevo
+     Il form invia l'email al modulo Brevo collegato alla lista
+     scelta per il lead magnet "Armocromia over 40". Non serve
+     nessuna API key nel codice: si usa l'URL del modulo Brevo
+     (form action), che è pensato apposta per essere chiamato da
+     un form pubblico senza esporre credenziali.
+
+     Per attivarlo:
+     1. Su Brevo: Contatti → Moduli → Crea modulo → tipo
+        "Modulo classico", collegato alla lista di destinazione.
+     2. Nel builder lascia solo il campo Email (rimuovi
+        nome/cognome se non servono). Se vuoi salvare anche la
+        stagione come attributo del contatto, crea prima
+        l'attributo personalizzato STAGIONE (tipo testo) in
+        Contatti → Impostazioni → Attributi contatto, poi
+        aggiungilo al modulo come campo nascosto.
+     3. Vai su Condividi → Codice HTML e copia l'URL nell'
+        attributo action del tag <form> (del tipo
+        https://xxxxx.sibforms.com/serve/MUIFxxxxxxxxxxxxx).
+        Controlla anche i nomi esatti dei campi presenti nel
+        codice: di solito sono EMAIL e, se creato, STAGIONE;
+        email_address_check è un campo honeypot anti-spam e va
+        sempre lasciato vuoto.
+     4. Incolla l'URL qui sotto al posto del placeholder.
+     Finché BREVO_FORM_URL resta col valore placeholder, il
+     modulo funziona solo a livello visivo, senza salvare nulla.
      ═══════════════════════════════════════════════════════════ */
-  var WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxQC0mMfe-nX67BinxaRM07Ak_tmz_tghH3bOBfMAh8nM8QxwSQSXohOiXJtCjC2MfgHg/exec';
+  var BREVO_FORM_URL = 'https://SOSTITUISCI.sibforms.com/serve/SOSTITUISCI';
 
   function isConfigured() {
-    return /^https:\/\/script\.google\.com\//.test(WEB_APP_URL);
+    return /^https:\/\/[a-z0-9.-]+\.sibforms\.com\//.test(BREVO_FORM_URL);
   }
 
   /* ───────────────────────────────────────────────────────────
@@ -81,15 +97,19 @@
 
   var answers = [];
   var currentStep = 0;
+  var currentSeason = null;
 
   var quizEl = document.getElementById('quiz');
   var cardEl = document.getElementById('quiz-card');
   var progressFill = document.getElementById('quiz-progress-fill');
   var progressLabel = document.getElementById('quiz-progress-label');
   var resultEl = document.getElementById('quiz-result');
+  var gateEl = document.getElementById('quiz-gate');
+  var revealEl = document.getElementById('quiz-reveal');
   var resultSeasonEl = document.getElementById('result-season');
   var resultDescEl = document.getElementById('result-desc');
   var restartBtn = document.getElementById('quiz-restart');
+  var emailForm = document.getElementById('quiz-email-form');
 
   function renderStep() {
     var q = QUESTIONS[currentStep];
@@ -161,32 +181,36 @@
 
   function showResult() {
     quizEl.hidden = true;
-    var season = computeSeason();
-    resultSeasonEl.textContent = season.nome;
-    resultDescEl.textContent = season.desc;
+    // La stagione viene calcolata subito (serve per il testo da
+    // mandare a Brevo) ma resta nascosta: si vede solo il gate
+    // email finché il form non viene inviato.
+    currentSeason = computeSeason();
+    resultSeasonEl.textContent = currentSeason.nome;
+    resultDescEl.textContent = currentSeason.desc;
     resultEl.hidden = false;
+    gateEl.hidden = false;
+    revealEl.hidden = true;
   }
 
   restartBtn.addEventListener('click', function () {
     answers = [];
     currentStep = 0;
+    currentSeason = null;
     resultEl.hidden = true;
     quizEl.hidden = false;
 
-    var form = document.getElementById('quiz-email-form');
-    var success = document.getElementById('quiz-email-success');
-    form.hidden = false;
-    form.reset();
-    var btn = form.querySelector('button');
+    emailForm.reset();
+    emailForm.hidden = false;
+    var btn = emailForm.querySelector('button');
     btn.removeAttribute('disabled');
-    btn.textContent = 'Voglio la palette';
-    success.hidden = true;
+    btn.textContent = 'Scopri il risultato';
+    gateEl.hidden = false;
+    revealEl.hidden = true;
 
     renderStep();
   });
 
-  /* ─── Raccolta email ─── */
-  var emailForm = document.getElementById('quiz-email-form');
+  /* ─── Raccolta email: il risultato si sblocca solo da qui ─── */
   emailForm.addEventListener('submit', function (e) {
     e.preventDefault();
     var input = emailForm.querySelector('input[type="email"]');
@@ -194,31 +218,29 @@
     var email = (input.value || '').trim();
     if (!email) return;
 
-    var successEl = document.getElementById('quiz-email-success');
-
-    function markSent() {
-      emailForm.hidden = true;
-      successEl.hidden = false;
+    function reveal() {
+      gateEl.hidden = true;
+      revealEl.hidden = false;
     }
 
     if (!isConfigured()) {
-      markSent();
+      reveal();
       return;
     }
 
     button.setAttribute('disabled', 'true');
     button.textContent = 'Invio…';
 
-    fetch(WEB_APP_URL, {
+    fetch(BREVO_FORM_URL, {
       method: 'POST',
       mode: 'no-cors',
       body: new URLSearchParams({
-        email: email,
-        stagione: resultSeasonEl.textContent,
-        fonte: 'test-armocromia'
+        EMAIL: email,
+        STAGIONE: currentSeason ? currentSeason.nome : '',
+        email_address_check: ''
       })
     }).then(function () {
-      markSent();
+      reveal();
     }).catch(function () {
       button.removeAttribute('disabled');
       button.textContent = 'Riprova';
