@@ -33,7 +33,7 @@
      4. Le recensioni arrivano nel foglio "Recensioni": scegli quelle
         da pubblicare e caricale a mano sul sito.
      ═══════════════════════════════════════════════════════════ */
-  var WEB_APP_URL = 'INCOLLA_QUI_URL_WEB_APP_GOOGLE_APPS_SCRIPT';
+  var WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxcQcKj1O1MYQ80oQNngD7ILvH5ra24rFARx7xe53J3zjyAiom7NOeDUvfJ1SHxysXICA/exec';
 
   function isConfigured() {
     return /^https:\/\/script\.google\.com\//.test(WEB_APP_URL);
