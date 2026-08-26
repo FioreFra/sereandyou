@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, follow">
+<title>Lascia una recensione — Sere&amp;You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Cormorant+Garamond:ital,wght@1,500;1,600;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="page page--narrow">
+  <div class="banner">Nuovi look ogni settimana su TikTok — link in ogni carosello</div>
+
+  <div class="hdr">
+    <img class="hdr__logo" src="assets/sereyou-logo.png" alt="Sere&amp;You" style="height:94px;width:94px;">
+
+    <a href="index.html#look-grid" class="btn-outline">Scopri i look</a>
+  </div>
+
+  <div class="crumb">
+    <a href="index.html">Home</a>
+    <span class="crumb__sep">/</span>
+    <span class="crumb__current">Lascia una recensione</span>
+  </div>
+
+  <div class="review-main">
+    <div class="review-intro">
+      <h1>Raccontami com'è andata</h1>
+      <p>Hai preso uno dei look o dei prodotti che consiglio? Scrivimi due righe: le recensioni più belle finiscono sul sito.</p>
+    </div>
+
+    <form id="review-form" class="review-form">
+      <div class="review-field">
+        <label for="review-nome">Nome o nickname</label>
+        <input type="text" id="review-nome" name="nome" placeholder="Es. Giulia" required>
+      </div>
+
+      <div class="review-field">
+        <label for="review-prodotto">Cosa hai acquistato? <span class="review-field__optional">(facoltativo)</span></label>
+        <input type="text" id="review-prodotto" name="prodotto" placeholder="Es. Blazer strutturato color panna">
+      </div>
+
+      <div class="review-field">
+        <span class="review-field__label">Voto</span>
+        <div class="star-rating" role="radiogroup" aria-label="Voto da 1 a 5 stelle">
+          <input type="radio" id="star5" name="voto" value="5" required><label for="star5" title="5 stelle">★</label>
+          <input type="radio" id="star4" name="voto" value="4"><label for="star4" title="4 stelle">★</label>
+          <input type="radio" id="star3" name="voto" value="3"><label for="star3" title="3 stelle">★</label>
+          <input type="radio" id="star2" name="voto" value="2"><label for="star2" title="2 stelle">★</label>
+          <input type="radio" id="star1" name="voto" value="1"><label for="star1" title="1 stella">★</label>
+        </div>
+      </div>
+
+      <div class="review-field">
+        <label for="review-testo">La tua recensione</label>
+        <textarea id="review-testo" name="testo" rows="5" placeholder="Raccontami cosa ne pensi…" required></textarea>
+      </div>
+
+      <div class="review-field">
+        <label for="review-email">Email <span class="review-field__optional">(facoltativa, non verrà pubblicata)</span></label>
+        <input type="email" id="review-email" name="email" placeholder="la-tua-email@esempio.com">
+      </div>
+
+      <label class="review-consent">
+        <input type="checkbox" name="consenso" required>
+        <span>Acconsento al trattamento dei dati inseriti per la pubblicazione della recensione (in forma anonima o con il nome scelto) e ho letto la <a href="privacy.html">Privacy Policy</a>.</span>
+      </label>
+
+      <button type="submit" class="btn-primary">Invia la recensione</button>
+      <p class="review-status" id="review-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+
+  <div class="ftr">
+    <img src="assets/sereyou-logo.png" alt="Sere&amp;You" style="height:28px;width:auto;">
+    <span class="ftr__copy">© 2026 Sere&amp;You · i link ai prodotti sono affiliati</span>
+    <a href="index.html" class="ftr__back">← Torna alla home</a>
+    <a href="#" class="ftr__back" data-cc-open>Preferenze Cookie</a>
+  </div>
+</div>
+
+<script src="js/recensioni.js"></script>
+<script type="text/javascript">
+  var vglnk = {key: '9481e7cc8377655723168efb43fdb992'};
+  (function(d, t) {var s = d.createElement(t);
+    s.type = 'text/javascript';s.async = true;
+    s.src = '//cdn.viglink.com/api/vglnk.js';
+    var r = d.getElementsByTagName(t)[0];
+    r.parentNode.insertBefore(s, r);
+  }(document, 'script'));
+</script>
+<script src="js/cookie-consent.js"></script>
+</body>
+</html>
