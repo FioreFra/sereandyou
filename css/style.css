@@ -772,8 +772,11 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   max-width: 460px;
 }
 
-.quiz-result .btn-primary {
-  align-self: center;
+.quiz-result__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
 }
 
 .quiz-email {
