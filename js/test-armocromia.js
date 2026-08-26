@@ -15,6 +15,13 @@
      ═══════════════════════════════════════════════════════════ */
   var WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxQC0mMfe-nX67BinxaRM07Ak_tmz_tghH3bOBfMAh8nM8QxwSQSXohOiXJtCjC2MfgHg/exec';
 
+  /* ═══════════════════════════════════════════════════════════
+     WHATSAPP — numero a cui arriva il pulsante "Scrivimi su
+     WhatsApp" nel risultato, in formato internazionale senza
+     "+" ne' spazi.
+     ═══════════════════════════════════════════════════════════ */
+  var WHATSAPP_NUMBER = '393534013362';
+
   function isConfigured() {
     return /^https:\/\/script\.google\.com\//.test(WEB_APP_URL);
   }
@@ -94,6 +101,7 @@
   var resultSeasonEl = document.getElementById('result-season');
   var resultDescEl = document.getElementById('result-desc');
   var resultPaletteLink = document.getElementById('result-palette-link');
+  var resultWhatsappLink = document.getElementById('result-whatsapp-link');
   var restartBtn = document.getElementById('quiz-restart');
 
   function renderStep() {
@@ -170,6 +178,10 @@
     resultSeasonEl.textContent = season.nome;
     resultDescEl.textContent = season.desc;
     resultPaletteLink.href = 'palette-' + season.slug + '.html';
+
+    var waText = 'Ciao! Ho fatto il test armocromia: sono ' + season.nome + '. Mi mandi la palette dei colori? 😊';
+    resultWhatsappLink.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(waText);
+
     resultEl.hidden = false;
   }
 
