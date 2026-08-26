@@ -772,6 +772,10 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   max-width: 460px;
 }
 
+.quiz-result .btn-primary {
+  align-self: center;
+}
+
 .quiz-email {
   margin-top: 12px;
   width: 100%;
@@ -939,6 +943,97 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   font: 700 13px 'DM Sans', sans-serif;
   color: var(--purple);
   min-height: 1em;
+}
+
+/* Palette page */
+.palette-main {
+  padding: 24px 40px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.palette-intro .tag { margin-bottom: 12px; }
+
+.palette-intro h1 {
+  margin: 0 0 10px;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 38px;
+  color: var(--black);
+}
+
+.palette-intro p {
+  margin: 0;
+  font: 400 15px/1.6 'DM Sans', sans-serif;
+  color: rgba(0, 0, 0, .7);
+  max-width: 560px;
+}
+
+.palette-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.palette-actions__hint {
+  font: 400 12.5px 'DM Sans', sans-serif;
+  color: rgba(0, 0, 0, .5);
+}
+
+.palette-viewer-wrap {
+  border: 1.5px solid var(--black);
+  aspect-ratio: 3 / 4;
+  max-width: 520px;
+}
+
+.palette-viewer {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.palette-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding-top: 8px;
+  border-top: 1.5px solid var(--black);
+}
+
+.palette-nav__label {
+  font: 700 12.5px 'DM Sans', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  color: rgba(0, 0, 0, .5);
+  margin-right: 4px;
+}
+
+.palette-nav a {
+  font: 700 13px 'DM Sans', sans-serif;
+  text-decoration: none;
+  color: var(--black);
+  border: 1.5px solid var(--black);
+  padding: 6px 14px;
+}
+
+.palette-nav a:hover { background: var(--purple-light); }
+
+.palette-nav__current {
+  font: 700 13px 'DM Sans', sans-serif;
+  color: #fff;
+  background: var(--purple);
+  border: 1.5px solid var(--purple);
+  padding: 6px 14px;
+}
+
+@media (max-width: 640px) {
+  .palette-main { padding: 32px 24px 48px; }
+  .palette-viewer-wrap { max-width: 100%; }
 }
 
 /* Legal pages */

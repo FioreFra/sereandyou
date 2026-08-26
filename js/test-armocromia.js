@@ -63,18 +63,22 @@
   var SEASONS = {
     'freddo-alto': {
       nome: 'Inverno',
+      slug: 'inverno',
       desc: 'Sei probabilmente Inverno: pelle, capelli e occhi creano un contrasto netto, e sono i colori freddi e decisi a farti brillare di più. Il pastello ti spegne.'
     },
     'freddo-basso': {
       nome: 'Estate',
+      slug: 'estate',
       desc: 'Sei probabilmente Estate: toni freddi ma sfumati, senza strappi tra pelle, capelli e occhi. I colori morbidi ti valorizzano, quelli troppo decisi ti induriscono i lineamenti.'
     },
     'caldo-alto': {
       nome: 'Autunno',
+      slug: 'autunno',
       desc: 'Sei probabilmente Autunno: pelle e capelli caldi e terrosi, con un contrasto deciso rispetto agli occhi. I colori caldi e profondi ti danno luce, i pastelli ti spengono.'
     },
     'caldo-basso': {
       nome: 'Primavera',
+      slug: 'primavera',
       desc: 'Sei probabilmente Primavera: toni caldi e delicati, sfumati tra loro senza strappi. I colori chiari e luminosi ti illuminano, quelli scuri o freddi ti appesantiscono.'
     }
   };
@@ -89,6 +93,7 @@
   var resultEl = document.getElementById('quiz-result');
   var resultSeasonEl = document.getElementById('result-season');
   var resultDescEl = document.getElementById('result-desc');
+  var resultPaletteLink = document.getElementById('result-palette-link');
   var restartBtn = document.getElementById('quiz-restart');
 
   function renderStep() {
@@ -164,6 +169,7 @@
     var season = computeSeason();
     resultSeasonEl.textContent = season.nome;
     resultDescEl.textContent = season.desc;
+    resultPaletteLink.href = 'palette-' + season.slug + '.html';
     resultEl.hidden = false;
   }
 
