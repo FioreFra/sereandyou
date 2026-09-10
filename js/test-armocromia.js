@@ -28,41 +28,96 @@
 
   /* ───────────────────────────────────────────────────────────
      DOMANDE
-     Ogni opzione porta un punteggio "asse" (freddo/caldo) e,
-     solo per l'ultima domanda, il contrasto (alto/basso).
+     10 domande su 3 caratteristiche:
+     - "axis" (freddo/caldo): domande 1,3,4,8,9,10 — 6 segnali,
+       decidono la temperatura.
+     - "contrast" (alto/basso): domande 2,5,7 — 3 segnali (sempre
+       dispari, nessuno saltabile: il pareggio è impossibile).
+     - "valore" (chiaro/scuro): domanda 6, un solo segnale. Non
+       decide la stagione (che resta temperatura × contrasto,
+       4 caselle) ma aggiunge una riga al risultato — un quinto
+       asse indipendente non avrebbe altre stagioni in cui finire.
      ─────────────────────────────────────────────────────────── */
   var QUESTIONS = [
     {
-      title: 'Capelli bianchi (se presenti)',
-      hint: 'Se non ne hai ancora, salta pure.',
+      title: 'Arancione o fucsia?',
+      hint: 'Immagina i due colori vicino al viso, o prova un capo se ce l\'hai.',
       options: [
-        { label: 'Tendono ad argento o grigio ghiaccio', axis: 'freddo' },
-        { label: 'Tendono a giallo, avorio o champagne', axis: 'caldo' },
-        { label: 'Non ho capelli bianchi — salta questa domanda', axis: null, skip: true }
+        { label: 'Arancione', axis: 'caldo' },
+        { label: 'Fucsia', axis: 'freddo' }
       ]
     },
     {
-      title: 'Vene del polso',
-      hint: 'Guardale alla luce naturale, non artificiale.',
+      title: 'Nero vicino al viso',
+      hint: 'Vale anche un maglione o una sciarpa scura.',
       options: [
-        { label: 'Bluastre o violacee', axis: 'freddo' },
-        { label: 'Verdi o olivastre', axis: 'caldo' }
+        { label: 'Mi illumina', contrast: 'alto' },
+        { label: 'Mi spegne', contrast: 'basso' }
       ]
     },
     {
       title: 'Oro o argento?',
       hint: 'Prova un gioiello vicino al viso — o immaginalo.',
       options: [
-        { label: 'L\'argento illumina di più', axis: 'freddo' },
-        { label: 'L\'oro illumina di più', axis: 'caldo' }
+        { label: 'Argento', axis: 'freddo' },
+        { label: 'Oro', axis: 'caldo' }
       ]
     },
     {
-      title: 'Contrasto naturale',
-      hint: 'Guarda pelle, capelli e occhi insieme, allo specchio.',
+      title: 'Bianco ottico o crema?',
+      hint: 'Il bianco ottico è il bianco puro; il crema tende all\'avorio.',
       options: [
-        { label: 'Contrasto netto tra i tre', contrast: 'alto' },
-        { label: 'Tonalità simili, sfumate tra loro', contrast: 'basso' }
+        { label: 'Bianco ottico', axis: 'freddo' },
+        { label: 'Color crema', axis: 'caldo' }
+      ]
+    },
+    {
+      title: 'Colori accesi o soft?',
+      hint: 'Pensa a come ti senti vestita: più a tuo agio nel deciso o nel morbido.',
+      options: [
+        { label: 'Accesi e decisi', contrast: 'alto' },
+        { label: 'Soft e polverosi', contrast: 'basso' }
+      ]
+    },
+    {
+      title: 'Colori chiari o profondi?',
+      hint: 'Non caldo o freddo: quanto sono chiari o scuri.',
+      options: [
+        { label: 'Chiari e luminosi', valore: 'chiaro' },
+        { label: 'Profondi e scuri', valore: 'scuro' }
+      ]
+    },
+    {
+      title: 'Contrasto netto (bianco + nero)',
+      hint: 'Immagina un outfit o un trucco con bianco e nero insieme.',
+      options: [
+        { label: 'Mi valorizzano', contrast: 'alto' },
+        { label: 'Mi spengono', contrast: 'basso' }
+      ]
+    },
+    {
+      title: 'Beige vicino al viso',
+      hint: 'Vale anche cammello o tortora.',
+      options: [
+        { label: 'Più luminosa', axis: 'caldo' },
+        { label: 'Si spegne', axis: 'freddo' }
+      ]
+    },
+    {
+      title: 'Bianco puro',
+      hint: 'Il bianco puro, non l\'avorio o il panna.',
+      options: [
+        { label: 'Più fresca, riposata', axis: 'freddo' },
+        { label: 'Più stanca, spenta', axis: 'caldo' }
+      ]
+    },
+    {
+      title: 'Capelli bianchi (se presenti)',
+      hint: 'Se non ne hai ancora, salta pure.',
+      options: [
+        { label: 'Argento o grigio ghiaccio', axis: 'freddo' },
+        { label: 'Giallo o avorio', axis: 'caldo' },
+        { label: 'Non ho capelli bianchi — salta questa domanda', axis: null, skip: true }
       ]
     }
   ];
@@ -71,22 +126,30 @@
     'freddo-alto': {
       nome: 'Inverno',
       slug: 'inverno',
-      desc: 'Sei probabilmente Inverno: pelle, capelli e occhi creano un contrasto netto, e sono i colori freddi e decisi a farti brillare di più. Il pastello ti spegne.'
+      desc: 'Sei probabilmente Inverno: pelle, capelli e occhi creano un contrasto netto, e sono i colori freddi e decisi a farti brillare di più. Il pastello ti spegne.',
+      chiaro: ' Il tuo registro è quello ghiacciato, luminoso, quasi cristallino.',
+      scuro: ' Il tuo registro è quello profondo, quasi notturno.'
     },
     'freddo-basso': {
       nome: 'Estate',
       slug: 'estate',
-      desc: 'Sei probabilmente Estate: toni freddi ma sfumati, senza strappi tra pelle, capelli e occhi. I colori morbidi ti valorizzano, quelli troppo decisi ti induriscono i lineamenti.'
+      desc: 'Sei probabilmente Estate: toni freddi ma sfumati, senza strappi tra pelle, capelli e occhi. I colori morbidi ti valorizzano, quelli troppo decisi ti induriscono i lineamenti.',
+      chiaro: ' Il tuo registro è quello più chiaro e polveroso, delicato.',
+      scuro: ' Il tuo registro è quello medio-scuro, sempre morbido, mai duro.'
     },
     'caldo-alto': {
       nome: 'Autunno',
       slug: 'autunno',
-      desc: 'Sei probabilmente Autunno: pelle e capelli caldi e terrosi, con un contrasto deciso rispetto agli occhi. I colori caldi e profondi ti danno luce, i pastelli ti spengono.'
+      desc: 'Sei probabilmente Autunno: pelle e capelli caldi e terrosi, con un contrasto deciso rispetto agli occhi. I colori caldi e profondi ti danno luce, i pastelli ti spengono.',
+      chiaro: ' Il tuo registro è quello caldo ma luminoso, mai cupo.',
+      scuro: ' Il tuo registro è quello caldo e profondo, quasi terroso.'
     },
     'caldo-basso': {
       nome: 'Primavera',
       slug: 'primavera',
-      desc: 'Sei probabilmente Primavera: toni caldi e delicati, sfumati tra loro senza strappi. I colori chiari e luminosi ti illuminano, quelli scuri o freddi ti appesantiscono.'
+      desc: 'Sei probabilmente Primavera: toni caldi e delicati, sfumati tra loro senza strappi. I colori chiari e luminosi ti illuminano, quelli scuri o freddi ti appesantiscono.',
+      chiaro: ' Il tuo registro è quello più chiaro e fresco, leggero.',
+      scuro: ' Il tuo registro è quello caldo e pieno, mai spento.'
     }
   };
 
@@ -150,26 +213,40 @@
   function computeSeason() {
     var warm = 0;
     var cold = 0;
-    var contrast = null;
-    var lastAxisAnswer = null;
+    var lastTempAnswer = null;
+    var alto = 0;
+    var basso = 0;
+    var valore = null;
 
     answers.forEach(function (a) {
-      if (a.axis === 'freddo') { cold += 1; lastAxisAnswer = 'freddo'; }
-      if (a.axis === 'caldo') { warm += 1; lastAxisAnswer = 'caldo'; }
-      if (a.contrast) contrast = a.contrast;
+      if (a.axis === 'freddo') { cold += 1; lastTempAnswer = 'freddo'; }
+      if (a.axis === 'caldo') { warm += 1; lastTempAnswer = 'caldo'; }
+      if (a.contrast === 'alto') alto += 1;
+      if (a.contrast === 'basso') basso += 1;
+      if (a.valore) valore = a.valore;
     });
 
     var temperatura;
     if (warm === cold) {
-      // Pareggio possibile solo se la domanda sui capelli bianchi
-      // è stata saltata: si usa oro/argento (domanda 3) come ago
-      // della bilancia, perché è il segnale più diretto.
-      temperatura = lastAxisAnswer === 'caldo' ? 'caldo' : 'freddo';
+      // Pareggio possibile solo se la domanda sui capelli bianchi (l'unica
+      // saltabile, sempre l'ultima) NON viene saltata: con 6 domande sulla
+      // temperatura il totale è pari e può dividersi 3-3. In quel caso
+      // decide proprio la risposta sui capelli bianchi, l'ultima data.
+      temperatura = lastTempAnswer;
     } else {
       temperatura = warm > cold ? 'caldo' : 'freddo';
     }
 
-    return SEASONS[temperatura + '-' + contrast];
+    // Il contrasto arriva da 3 domande, mai saltabili: il totale è sempre
+    // dispari, quindi un pareggio è matematicamente impossibile.
+    var contrasto = alto > basso ? 'alto' : 'basso';
+
+    var season = SEASONS[temperatura + '-' + contrasto];
+    return {
+      nome: season.nome,
+      slug: season.slug,
+      desc: season.desc + (valore === 'chiaro' ? season.chiaro : season.scuro)
+    };
   }
 
   function showResult() {
