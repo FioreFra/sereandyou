@@ -2,25 +2,16 @@
   'use strict';
 
   /* ═══════════════════════════════════════════════════════════
-     CONFIGURAZIONE INVIO EMAIL
-     Riusa la stessa Web App Google Apps Script già collegata al
-     modulo newsletter del sito (vedi js/newsletter.js), così i
-     contatti finiscono nello stesso Google Sheet. Il campo
-     "fonte" distingue i lead del quiz da quelli della newsletter
-     generica — perché lo Sheet lo salvi, aggiungi una colonna
-     "fonte" (e "stagione") allo script Apps Script lato server:
-     oggi lo script probabilmente legge solo e.parameter.email,
-     quindi i due campi extra vengono inviati ma ignorati finché
-     non lo si aggiorna.
+     CONFIGURAZIONE INVIO NUMERO
+     Web App Apps Script collegata al foglio dedicato "Lead Test
+     Armocromia | Sere&You" (cartella SERE&YOU/Armocromia su Drive).
+     Il doPost() lì appende: telefono, le 10 risposte (q1..q10), gli
+     assi calcolati (temperatura/contrasto/valore), la stagione e
+     "fonte" — nello stesso ordine delle colonne del foglio. Il
+     risultato non si vede sulla pagina: arriva su WhatsApp al
+     numero lasciato, mandato manualmente da chi gestisce il foglio.
      ═══════════════════════════════════════════════════════════ */
-  var WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxQC0mMfe-nX67BinxaRM07Ak_tmz_tghH3bOBfMAh8nM8QxwSQSXohOiXJtCjC2MfgHg/exec';
-
-  /* ═══════════════════════════════════════════════════════════
-     WHATSAPP — numero a cui arriva il pulsante "Scrivimi su
-     WhatsApp" nel risultato, in formato internazionale senza
-     "+" ne' spazi.
-     ═══════════════════════════════════════════════════════════ */
-  var WHATSAPP_NUMBER = '393534013362';
+  var WEB_APP_URL = 'https://script.google.com/macros/s/AKfycby1kJd0qivWgFFwJ0_RJ4ibxEUGdoq7NKzj19QRF85nZJC3ZcfjIWwKhnZTLgLH6miu/exec';
 
   function isConfigured() {
     return /^https:\/\/script\.google\.com\//.test(WEB_APP_URL);
@@ -161,10 +152,6 @@
   var progressFill = document.getElementById('quiz-progress-fill');
   var progressLabel = document.getElementById('quiz-progress-label');
   var resultEl = document.getElementById('quiz-result');
-  var resultSeasonEl = document.getElementById('result-season');
-  var resultDescEl = document.getElementById('result-desc');
-  var resultPaletteLink = document.getElementById('result-palette-link');
-  var resultWhatsappLink = document.getElementById('result-whatsapp-link');
   var restartBtn = document.getElementById('quiz-restart');
 
   function renderStep() {
@@ -245,54 +232,57 @@
     return {
       nome: season.nome,
       slug: season.slug,
-      desc: season.desc + (valore === 'chiaro' ? season.chiaro : season.scuro)
+      desc: season.desc + (valore === 'chiaro' ? season.chiaro : season.scuro),
+      temperatura: temperatura,
+      contrasto: contrasto,
+      valore: valore
     };
   }
 
+  // Risultato dell'ultimo test completato: non viene mai mostrato in
+  // pagina, ma serve al form telefono per mandare a Google Sheet la
+  // stagione e gli assi che l'hanno determinata, insieme alle risposte
+  // singole in `answers`.
+  var currentSeason = null;
+
   function showResult() {
     quizEl.hidden = true;
-    var season = computeSeason();
-    resultSeasonEl.textContent = season.nome;
-    resultDescEl.textContent = season.desc;
-    resultPaletteLink.href = 'palette-' + season.slug + '.html';
-
-    var waText = 'Ciao! Ho fatto il test armocromia: sono ' + season.nome + '. Mi mandi la palette dei colori? 😊';
-    resultWhatsappLink.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(waText);
-
+    currentSeason = computeSeason();
     resultEl.hidden = false;
   }
 
   restartBtn.addEventListener('click', function () {
     answers = [];
     currentStep = 0;
+    currentSeason = null;
     resultEl.hidden = true;
     quizEl.hidden = false;
 
-    var form = document.getElementById('quiz-email-form');
-    var success = document.getElementById('quiz-email-success');
+    var form = document.getElementById('quiz-phone-form');
+    var success = document.getElementById('quiz-phone-success');
     form.hidden = false;
     form.reset();
     var btn = form.querySelector('button');
     btn.removeAttribute('disabled');
-    btn.textContent = 'Voglio la palette';
+    btn.textContent = 'Voglio il risultato →';
     success.hidden = true;
 
     renderStep();
   });
 
-  /* ─── Raccolta email ─── */
-  var emailForm = document.getElementById('quiz-email-form');
-  emailForm.addEventListener('submit', function (e) {
+  /* ─── Raccolta numero di telefono ─── */
+  var phoneForm = document.getElementById('quiz-phone-form');
+  phoneForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    var input = emailForm.querySelector('input[type="email"]');
-    var button = emailForm.querySelector('button');
-    var email = (input.value || '').trim();
-    if (!email) return;
+    var input = phoneForm.querySelector('input[type="tel"]');
+    var button = phoneForm.querySelector('button');
+    var telefono = (input.value || '').trim();
+    if (!telefono) return;
 
-    var successEl = document.getElementById('quiz-email-success');
+    var successEl = document.getElementById('quiz-phone-success');
 
     function markSent() {
-      emailForm.hidden = true;
+      phoneForm.hidden = true;
       successEl.hidden = false;
     }
 
@@ -304,14 +294,23 @@
     button.setAttribute('disabled', 'true');
     button.textContent = 'Invio…';
 
+    // Manda anche le 10 risposte singole (q1..q10, l'etichetta scelta),
+    // non solo il risultato finale: utile per capire quali domande sono
+    // più divisive o rivedere lo scoring in futuro.
+    var payload = { telefono: telefono };
+    answers.forEach(function (a, i) {
+      payload['q' + (i + 1)] = a.label;
+    });
+    payload.temperatura = currentSeason.temperatura;
+    payload.contrasto = currentSeason.contrasto;
+    payload.valore = currentSeason.valore;
+    payload.stagione = currentSeason.nome;
+    payload.fonte = 'test-armocromia';
+
     fetch(WEB_APP_URL, {
       method: 'POST',
       mode: 'no-cors',
-      body: new URLSearchParams({
-        email: email,
-        stagione: resultSeasonEl.textContent,
-        fonte: 'test-armocromia'
-      })
+      body: new URLSearchParams(payload)
     }).then(function () {
       markSent();
     }).catch(function () {

@@ -4,17 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Che stagione sei? Il test dei 5 minuti — Sere&amp;You</title>
-<meta name="description" content="Scopri la tua stagione cromatica in 10 domande veloci: colori, metalli, contrasto e capelli bianchi. Test gratuito, risultato immediato.">
+<meta name="description" content="Scopri la tua stagione cromatica in 10 domande veloci. Test gratuito: ti mando il risultato su WhatsApp.">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Che stagione sei? Il test dei 5 minuti — Sere&amp;You">
-<meta property="og:description" content="Scopri la tua stagione cromatica in 10 domande veloci. Gratis, risultato immediato.">
+<meta property="og:description" content="Scopri la tua stagione cromatica in 10 domande veloci. Gratis, risultato su WhatsApp.">
 <meta property="og:url" content="https://sereandyou.it/test-armocromia.html">
 <!-- Placeholder: sostituire con un'immagine di anteprima dedicata (1200x630) nello stile del sito, prima del lancio -->
 <meta property="og:image" content="https://sereandyou.it/assets/sereyou-logo.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Che stagione sei? Il test dei 5 minuti — Sere&amp;You">
-<meta name="twitter:description" content="Scopri la tua stagione cromatica in 10 domande veloci. Gratis, risultato immediato.">
+<meta name="twitter:description" content="Scopri la tua stagione cromatica in 10 domande veloci. Gratis, risultato su WhatsApp.">
 <meta name="twitter:image" content="https://sereandyou.it/assets/sereyou-logo.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,35 +55,26 @@
   </div>
 
   <div class="quiz-result" id="quiz-result" hidden>
-    <span class="tag">Il tuo risultato</span>
-    <h2 id="result-season"></h2>
-    <p class="quiz-result__desc" id="result-desc"></p>
-    <div class="quiz-result__actions">
-      <a href="#" id="result-palette-link" class="btn-primary">Vedi la palette dei colori →</a>
-      <a href="#" id="result-whatsapp-link" class="btn-outline" target="_blank" rel="noopener">Scrivimi su WhatsApp →</a>
-    </div>
-
-    <div class="news quiz-email" id="quiz-email">
+    <div class="news quiz-email" id="quiz-phone-gate">
       <div>
-        <h3>Vuoi la palette esatta della tua stagione?</h3>
-        <p>I colori da cercare, quelli da evitare, e i trucchi per valorizzare capelli, occhi e pelle — te li mando via email, con uno sconto di lancio sulla guida completa.</p>
+        <span class="tag">Test completato</span>
+        <h3>Vuoi sapere la tua stagione?</h3>
+        <p>Lasciami il numero: ti mando il risultato su WhatsApp, con qualche consiglio di stile pensato per te. Lo uso solo per questo, e per avvisarti quando lancio la linea di abbigliamento Sere&amp;You, con lo sconto dedicato a chi c'è dall'inizio. Niente spam, promesso.</p>
       </div>
 
-      <form id="quiz-email-form">
+      <form id="quiz-phone-form">
         <div class="news__row">
-          <input type="email" name="email" placeholder="la-tua-email@esempio.com" required>
-          <button type="submit">Voglio la palette</button>
+          <input type="tel" name="telefono" placeholder="Il tuo numero WhatsApp" required>
+          <button type="submit">Voglio il risultato →</button>
         </div>
         <label class="news__consent">
           <input type="checkbox" name="consenso" required>
-          <span>Accetto di essere ricontattata via email e ho letto la <a href="privacy.html">Privacy Policy</a>.</span>
+          <span>Accetto di essere ricontattata su WhatsApp e ho letto la <a href="privacy.html">Privacy Policy</a>.</span>
         </label>
       </form>
 
-      <div class="quiz-email__success" id="quiz-email-success" hidden>
-        <p>Fatto. Controlla la posta (anche lo spam): la palette è in arrivo.</p>
-        <!-- Placeholder: sostituire con l'URL reale della pagina prodotto "Armocromia over 40" (Payhip/Gumroad) -->
-        <a href="https://payhip.com/b/SOSTITUISCI-CON-URL-PRODOTTO" id="quiz-product-link" class="btn-primary" target="_blank" rel="noopener">Voglio subito tutta la guida →</a>
+      <div class="quiz-email__success" id="quiz-phone-success" hidden>
+        <p>Fatto! Ti scrivo su WhatsApp appena posso, con il tuo risultato e qualche consiglio su misura.</p>
       </div>
     </div>
 
