@@ -68,6 +68,36 @@ Segui alla lettera la sezione 6 dello style guide: struttura, lessico, blocco fi
 3. Scrivi il testo in locale in `COPY.txt` con codifica **`utf-8-sig`** (Python: `open(p, 'w', encoding='utf-8-sig')`). Dentro: `TITOLO` + l'hook con emoji (massimo 90 caratteri), una riga vuota, `DESCRIZIONE` + il copy completo con gli hashtag. Caricalo **come file**: `base64Content` = riferimento sha256, `contentMimeType: text/plain`, `disableConversionToGoogleType: true`. ⚠️ Non usare `textContent` e non convertirlo in Google Doc: la conversione corrompe gli emoji (testato il 25/11/2026). Verifica che la dimensione su Drive (`fileSize`) sia uguale a quella del file locale.
 4. In chat mostra all'utente: il link alla cartella PRONTO, la copertina, il titolo e il copy (in un blocco di codice, così si copia con un tocco).
 
+## Modalità automatica (attività programmata, nessuno in chat)
+Quando il prompt dice **"modalità automatica"**, nessuno risponderà alle domande: non fermarti ad aspettare scelte e applica queste regole al posto dei passi 1, 3 e 4.
+
+**Quali cartelle lavorare.** Tutte le sottocartelle di "Post" che rispettano tre condizioni:
+- la data di pubblicazione è **oggi o successiva**. Se nel nome c'è la data compatta `GGMM` dopo `AA_MM_GG_` (es. `26_11_25_2611 …`), conta quella: 26/11. Altrimenti conta `AA_MM_GG`;
+- **non contengono nessuna sottocartella**: né `PRONTO`, né cartelle di lavoro Canva come "outfit senza prodotto". Se c'è una sottocartella, il post è già stato fatto, a mano o in automatico;
+- contengono almeno 3 foto.
+
+**Hook: dal nome della cartella.**
+1. Il testo dopo le date è un **hook vero** se è una frase ironica o una battuta (es. "fuori icone di stile dentro operaie a fine turno"). Allora usalo come hook n.1, sistemando solo maiuscole, punteggiatura ed emoji. Il nome della cartella su Drive può essere troncato (circa 60 caratteri) o contenere `%C3%A0` al posto delle lettere accentate: ricostruisci la frase in modo sensato.
+2. Se il testo è **solo un argomento** (es. "halle berry", "gilet", "outfit giugno") e nella cartella **non** c'è `HOOK_PROPOSTI.txt`: scrivi `HOOK_PROPOSTI.txt` (UTF-8 con BOM, caricato come file .txt, vedi sotto) con 3 hook numerati e queste istruzioni per Serena: *"Per scegliere, rinomina la cartella aggiungendo alla fine h1, h2 o h3, oppure scrivi il tuo hook nel nome della cartella."* Poi **passa alla cartella successiva senza fare le slide**.
+3. Se c'è già `HOOK_PROPOSTI.txt`:
+   - il nome finisce con ` h1`, ` h2` o ` h3`: usa quell'hook del file;
+   - il nome ora contiene una frase-hook: usa quella;
+   - il nome non è cambiato: non fare nulla, Serena non ha ancora scelto.
+4. Riga viola: `INVERNO 2027  OVER 40`, adattata alla stagione. Per post su una celebrità: `ICONE DI STILE  OVER 40`.
+
+**Slide finale.** Alternanza come al passo 4. Se non trovi un PRONTO precedente, usa `segui`.
+
+**Foto.** Scegli tu copertina e ordine (passo 2). Misura testa e piedi di ogni foto guardandola a grandezza piena (passo 5). Scarta watermark, foto sgranate e doppioni.
+
+**Consegna.** Come al passo 7, più un file `NOTE.txt` nella cartella `PRONTO` con:
+- l'hook usato;
+- le altre 2 proposte;
+- le foto scartate e il motivo;
+- gli avvisi dello script (foto sgranate);
+- una riga: *"Controlla copertina e testo prima di pubblicare."*
+
+**A fine giro** scrivi nel riepilogo finale della sessione: quali post hai preparato (con il link alla cartella PRONTO), per quali hai scritto le proposte di hook e quali hai saltato, con il motivo.
+
 ## Regole
 - Un outfit per slide. Niente collage.
 - Mai inventare dati, prezzi, marchi o testimonianze. Mai promettere risultati.
