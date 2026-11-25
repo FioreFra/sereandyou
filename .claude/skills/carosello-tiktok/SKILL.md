@@ -43,13 +43,21 @@ Le due slide finali si alternano. Per capire quale tocca, guarda la cartella `PR
 Se prepari più post insieme, alterna anche tra di loro, in ordine di data.
 
 ### 5. Componi le slide
+**Inquadratura (regola di Serena):** avvicinare l'immagine il più possibile **senza tagliare testa e piedi**; se la foto è troppo stretta per il 4:5, **espandere** lo sfondo ai lati. Lo script lo fa da solo, ma per ogni foto devi dargli dove sono testa, piedi e centro della persona, come frazioni da 0 a 1: `foto.jpg@top,bottom,cx`.
+- `top` = cima dei capelli, `bottom` = punta delle scarpe, `cx` = centro orizzontale della persona.
+- Leggili guardando ogni foto a grandezza piena: il risultato di `download_file_content` la mostra. Se ti serve aiuto, crea una griglia con `render.py --inspect griglia.jpg foto1 foto2 …`, che mostra le righe ogni 5%. Se sono più di 4 foto, falla a gruppi di 3-4, altrimenti diventa troppo piccola per leggere le misure.
+- Nel dubbio arrotonda **verso l'esterno** (top più piccolo, bottom più grande): meglio un po' d'aria che un piede tagliato.
+
 ```bash
 python3 .claude/skills/carosello-tiktok/scripts/render.py \
-  --out <cartella_output> --cover <foto_copertina> \
+  --out <cartella_output> --cover "<foto_copertina>@0.05,0.97,0.5" \
   --hook "Riga 1…|Riga 2 🤣" --tag "Inverno 2027  Over 40" --cta segui|whatsapp \
-  <foto2> <foto3> ...
+  "<foto2>@0.08,0.95,0.52" "<foto3>@0.0,0.99,0.5" ...
 ```
-Poi **guarda la copertina** (01.jpg). Se il testo copre il viso o un punto importante dell'outfit, rigenera cambiando `--text-y` (es. 250 per metterlo più in alto, 850 per più in basso).
+Lo script stampa `ATTENZIONE` per le foto ingrandite più di 2,2 volte, che potrebbero risultare sgranate: segnalale all'utente.
+Poi **guarda la copertina** (01.jpg) e un riepilogo di tutte le slide. Controlla che:
+- testa e piedi non siano tagliati;
+- il testo non copra il viso o un punto importante dell'outfit. In quel caso cambia `--text-y` (es. 250 per metterlo più in alto, 850 per più in basso).
 
 ### 6. Scrivi il copy
 Segui alla lettera la sezione 6 dello style guide: struttura, lessico, blocco fisso "💜🦋 E restate sintonizzate…" e hashtag fissi. Parla solo di capi che si vedono nelle foto. Se il copy cita un dettaglio che non puoi verificare dalle foto, toglilo.
